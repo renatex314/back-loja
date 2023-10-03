@@ -14,7 +14,7 @@ export interface ProdutoResponse {
   prodNome?: string;
   prodDescr?: string;
   prodPreco?: number;
-  marca?: Marca;
+  marca?: Marca | null;
   prodQtdEstoque?: number;
 }
 

@@ -1,78 +1,64 @@
 import { RequestHandler } from "express";
-import { getConnection } from "./db.controller";
-import { CreateMarcaRequestBody, GetMarcaDropdownResponse, Marca } from "../types/marca";
+import marcaService from "../services/marca.service";
+import { CreateMarcaRequestBody } from "../types/marca";
 
 const getMarcasDropdown: RequestHandler = async (req, res, next) => {
-  const connection = getConnection();
 
   try {
-    const marcas: Array<Marca> = await connection
-      .select()
-      .from('marca');
-
-    const dropdown: GetMarcaDropdownResponse = marcas.map((marca) => ({
-      value: marca.marcaId as number,
-      label: marca.marcaNome as string
-    }));
-
+    const dropdown = await marcaService.getMarcasDropdown();
     res.json(dropdown);
   } catch (err) {
     console.error(err);
 
-    res.status(500).send('Ops, ocorreu um erro');
+    res.status(500).send(err);
+    next();
+  }
+}
+
+const getMarca: RequestHandler = async (req, res, next) => {
+  try {
+    const marcaId = parseInt(req.params.marcaId);
+
+    if (Number.isNaN(marcaId)) {
+      res.status(400).send('marcaId inválido');
+    }
+
+    const marca = await marcaService.getMarca(marcaId);
+    res.status(200).send(marca);
+  } catch (err) {
+    res.status(500).send(err);
     next();
   }
 }
 
 const createMarca: RequestHandler = async (req, res, next) => {
-  const connection = getConnection();
-  const trx = await connection.transaction();
-
   try {
     const marcaData: CreateMarcaRequestBody = req.body;
-
-    await connection
-      .insert(marcaData)
-      .into('marca')
-      .transacting(trx);
+    await marcaService.createMarca(marcaData);
 
     res.status(200).send('Marca criada com sucesso');
-    trx.commit();
   } catch (err) {
     console.error(err);
-
-    trx.rollback();
-    res.status(500).send('Ops, ocorreu um erro');
+    res.status(500).send(err);
     next();
   }
 }
 
 const deleteMarca: RequestHandler = async (req, res, next) => {
-  const connection = getConnection();
-  const trx = await connection.transaction();
-
   try {
     const marcaId = parseInt(req.params.marcaId);
 
     if (Number.isNaN(marcaId)) {
-      res.status(400).send('marcaId inválido')
+      res.status(400).send('marcaId inválido');
     }
 
-    await connection
-      .delete()
-      .from('marca')
-      .where({ marcaId })
-      .transacting(trx);
+    await marcaService.deleteMarca(marcaId);
 
     res.status(200).send('Marca removida com sucesso');
-    trx.commit();
   } catch (err) {
-    console.error(err);
-
-    trx.rollback();
-    res.status(500).send('Ops, ocorreu um erro');
+    res.status(500).send(err);
     next();
   }
 }
 
-export default { getMarcasDropdown, createMarca, deleteMarca };
+export default { getMarcasDropdown, getMarca, createMarca, deleteMarca };

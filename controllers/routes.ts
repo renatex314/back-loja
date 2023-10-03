@@ -19,6 +19,7 @@ router.delete('/cliente/delete/:cliId', clienteController.deleteCliente);
 /***        MARCAS         ***/
 /*****************************/
 router.get('/marca/dropdown', marcaController.getMarcasDropdown);
+router.get('/marca/:marcaId', marcaController.getMarca);
 router.post('/marca/create', marcaController.createMarca);
 router.delete('/marca/delete/:marcaId', marcaController.deleteMarca);
 

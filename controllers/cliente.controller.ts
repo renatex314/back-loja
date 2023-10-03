@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-import { getConnection } from "./db.controller";
 import { CreateClienteRequestBody, UpdateClienteRequestBody } from "../types/cliente";
 import clienteService from "../services/cliente.service";
 
@@ -17,7 +16,7 @@ const createCliente: RequestHandler = async (req, res, next) => {
   try {
     const clienteData: CreateClienteRequestBody = req.body;
 
-    clienteService.createCliente(clienteData);
+    await clienteService.createCliente(clienteData);
 
     res.status(200).send('Cliente criado com sucesso');
   } catch (err) {
@@ -30,7 +29,7 @@ const updateCliente: RequestHandler = async (req, res, next) => {
 
   try {
     const clienteData: UpdateClienteRequestBody = req.body;
-    clienteService.updateCliente(clienteData);
+    await clienteService.updateCliente(clienteData);
 
     res.status(200).send('Cliente atualizado com sucesso');
   } catch (err) {
@@ -47,7 +46,7 @@ const deleteCliente: RequestHandler = async (req, res, next) => {
       return res.status(400).send('cliId inválido');
     }
 
-    clienteService.deleteCliente(cliId);
+    await clienteService.deleteCliente(cliId);
 
     res.status(200).send('Cliente removido com sucesso');
   } catch (err) {

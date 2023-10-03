@@ -11,6 +11,20 @@ const getClientes = async () => {
   return clientes;
 }
 
+const getCliente = async (cliId: number) => {
+  const connection = getConnection();
+
+  try {
+    const cliente = await connection.select().from('cliente').first();
+
+    return cliente;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Erro ao obter os dados do cliente');
+  }
+}
+
 const createCliente = async (clienteData: CreateClienteRequestBody) => {
   const connection = getConnection();
   const trx = await connection.transaction();
@@ -79,4 +93,4 @@ const deleteCliente = async (cliId: number) => {
   }
 }
 
-export default { getClientes, createCliente, updateCliente, deleteCliente };
+export default { getCliente, getClientes, createCliente, updateCliente, deleteCliente };
