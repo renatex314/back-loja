@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
-import vendaService from "../services/venda.service";
-import { CreateVendaData, CreateVendaRequestBody } from "../types/venda";
 import pedidoService from "../services/pedido.service";
+import vendaService from "../services/venda.service";
+import { CreateVendaRequestBody } from "../types/venda";
 
 const getVendas: RequestHandler = async (_, res, next) => {
   try {

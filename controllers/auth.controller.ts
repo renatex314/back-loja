@@ -1,20 +1,36 @@
 import { RequestHandler } from "express";
-import jwt from 'jsonwebtoken';
+import { UserLoginData } from "../types/auth";
+import * as jsonwebtoken from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import authService from "../services/auth.service";
 
-// const checkAuthorization: RequestHandler = (req, res, next) => {
-//   const token = req.headers.authorization?.split(' ')?.[1];
+const loginUser: RequestHandler = async (req, res) => {
+  const TOKEN_SECRET = process.env.TOKEN_SECRET || '';
 
-//   if (!token) {
-//     return res.status(400).send("O token não foi informado");
-//   }
+  const userData: UserLoginData = req.body;
+  if (userData.usuEmail && userData.usuSenha) {
+    const userDataFromDB = await authService.getUserDataByUsuEmail(userData.usuEmail.toLowerCase());
 
-//   const decodedToken = jwt.verify(token, 'LOJA!@#', (err, decoded) => {
-//     if (err) return res.status(500).send("Erro ao realizar a autenticação");
+    if (userDataFromDB && bcrypt.compareSync(userData.usuSenha, userDataFromDB.usuSenhaHash)) {
+      const userToken = jsonwebtoken.sign(
+        {
+          usuEmail: userData.usuEmail
+        }, 
+        TOKEN_SECRET,
+        {
+          expiresIn: '1d'
+        }
+      );
 
-//     req
-//   });
+      return res.status(200).send(userToken);
+    }
+  } else {
+    return res.status(401).send('Email e/ou senha não informado(s)');
+  }
 
-//   res.status(200).json();
-// }
+  return res.status(401).send('Credenciais inválidas');
+}
 
-// export default { checkAuthorization }
+export default {
+  loginUser
+}

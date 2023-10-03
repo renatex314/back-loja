@@ -2,12 +2,22 @@
 
 USE loja;
 
+CREATE TABLE IF NOT EXISTS usuario(
+    usu_id INT PRIMARY KEY AUTO_INCREMENT,
+    usu_nome VARCHAR(100) NOT NULL,
+    usu_email VARCHAR(50) UNIQUE NOT NULL,
+    usu_senha_hash VARCHAR(255) NOT NULL,
+    usu_adm BOOLEAN NOT NULL DEFAULT FALSE
+);
+
 CREATE TABLE IF NOT EXISTS cliente(
     cli_id INT PRIMARY KEY AUTO_INCREMENT,
     cli_nome VARCHAR(100),
     cli_cpf CHAR(11) NOT NULL UNIQUE,
     cli_rg CHAR(9),
-    cli_dt_nascimento DATE
+    cli_dt_nascimento DATE,
+    usu_id INT,
+    CONSTRAINT usu_fk FOREIGN KEY (usu_id) REFERENCES usuario(usu_id);
 );
 
 CREATE TABLE IF NOT EXISTS marca(

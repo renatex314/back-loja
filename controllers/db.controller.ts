@@ -12,7 +12,7 @@ const getConfiguredConnection = () => {
       user: 'aplicacao',
       password: 'Senha123@',
       database: 'loja',
-      timezone: 'utc'
+      timezone: 'UTC'
     },
   }))
 }
