@@ -11,7 +11,7 @@ const loginUser: RequestHandler = async (req, res) => {
   if (userData.usuEmail && userData.usuSenha) {
     const userDataFromDB = await authService.getUserDataByUsuEmail(userData.usuEmail.toLowerCase());
 
-    if (userDataFromDB && bcrypt.compareSync(userData.usuSenha, userDataFromDB.usuSenhaHash)) {
+    if (userDataFromDB && bcrypt.compareSync(userData.usuSenha, userDataFromDB.cliSenhaHash as string)) {
       const userToken = jsonwebtoken.sign(
         {
           usuEmail: userData.usuEmail

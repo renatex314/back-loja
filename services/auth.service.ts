@@ -1,11 +1,11 @@
 import { getConnection } from "../controllers/db.controller";
-import { User } from "../types/auth";
+import { Cliente } from "../types/cliente";
 
-const getUserDataByUsuEmail = async (usuEmail: string) => {
+const getUserDataByUsuEmail = async (cliEmail: string) => {
   const connection = getConnection();
 
-  const userDataFromDB: User = await connection.select().from('usuario').where({
-    usuEmail
+  const userDataFromDB: Cliente = await connection.select().from('cliente').where({
+    cliEmail
   }).first();
 
   return userDataFromDB;
