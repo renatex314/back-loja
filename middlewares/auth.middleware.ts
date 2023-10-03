@@ -9,12 +9,12 @@ const authenticateUser: RequestHandler = (req, res, next) => {
     const jwtToken = bearerToken?.split(' ')?.[1].trim() || '';
 
     jsonwebtoken.verify(jwtToken, TOKEN_SECRET, (err) => {
-      if (err) return res.status(403).send('Token inválido').end();
+      if (err) return res.status(403).send('Token inválido');
 
       return next();
     });
   } else {
-    return res.status(400).send('Não autorizado').end();
+    return res.status(400).send('Não autorizado');
   }
 }
 
