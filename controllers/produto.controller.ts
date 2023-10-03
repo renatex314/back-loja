@@ -8,7 +8,8 @@ const getProdutos: RequestHandler = async (_, res, next) => {
 
     res.json(produtos);
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -21,7 +22,8 @@ const createProduto: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Produto inserido com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -33,7 +35,8 @@ const updateProduto: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Produto atulizado com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -51,7 +54,8 @@ const deleteProduto: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Produto removido com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }

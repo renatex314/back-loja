@@ -8,9 +8,8 @@ const getMarcasDropdown: RequestHandler = async (req, res, next) => {
     const dropdown = await marcaService.getMarcasDropdown();
     res.json(dropdown);
   } catch (err) {
-    console.error(err);
-
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -26,7 +25,8 @@ const getMarca: RequestHandler = async (req, res, next) => {
     const marca = await marcaService.getMarca(marcaId);
     res.status(200).send(marca);
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -38,8 +38,8 @@ const createMarca: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Marca criada com sucesso');
   } catch (err) {
-    console.error(err);
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -56,7 +56,8 @@ const deleteMarca: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Marca removida com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }

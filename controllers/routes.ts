@@ -43,5 +43,6 @@ router.delete('/produto/delete/:prodId', produtoController.deleteProduto);
 /*****************************/
 router.get('/venda/list', vendaController.getVendas);
 router.get('/venda/list/cliente/:cliId', vendaController.getVendasByCliId);
+router.post('/venda/create', vendaController.createVenda);
 
 export default router;

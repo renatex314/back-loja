@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS metodo_pagamento(
 
 CREATE TABLE IF NOT EXISTS venda(
     ven_id INT PRIMARY KEY AUTO_INCREMENT,
-    ven_dt DATE,
+    ven_dt DATETIME,
     cli_id INT NOT NULL,
     met_pag_id INT NOT NULL,
     CONSTRAINT cli_fk FOREIGN KEY (cli_id) REFERENCES cliente(cli_id),

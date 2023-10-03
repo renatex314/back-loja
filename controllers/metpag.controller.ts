@@ -8,7 +8,8 @@ const getMetodoPagamentoDropdown: RequestHandler = async (_, res, next) => {
 
     res.json(dropdown);
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -20,7 +21,8 @@ const createMetodoPagamento: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Método de pagamento criado com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -37,7 +39,8 @@ const deleteMetodoPagamento: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Método de pagamento removido com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }

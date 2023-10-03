@@ -11,8 +11,9 @@ const getConfiguredConnection = () => {
       port: 3306,
       user: 'aplicacao',
       password: 'Senha123@',
-      database: 'loja'
-    }
+      database: 'loja',
+      timezone: 'utc'
+    },
   }))
 }
 

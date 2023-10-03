@@ -7,7 +7,8 @@ const getClientes: RequestHandler = async (_, res, next) => {
     const clientes = await clienteService.getClientes();
     res.json(clientes);
   } catch (err) {
-    console.error(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -20,7 +21,8 @@ const createCliente: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Cliente criado com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -33,7 +35,8 @@ const updateCliente: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Cliente atualizado com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -50,7 +53,8 @@ const deleteCliente: RequestHandler = async (req, res, next) => {
 
     res.status(200).send('Cliente removido com sucesso');
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }

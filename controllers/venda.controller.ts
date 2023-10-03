@@ -1,5 +1,7 @@
 import { RequestHandler } from "express";
 import vendaService from "../services/venda.service";
+import { CreateVendaData, CreateVendaRequestBody } from "../types/venda";
+import pedidoService from "../services/pedido.service";
 
 const getVendas: RequestHandler = async (_, res, next) => {
   try {
@@ -7,7 +9,30 @@ const getVendas: RequestHandler = async (_, res, next) => {
 
     res.json(vendas);
   } catch (err) {
-    res.status(500).send(err);
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
+    next();
+  }
+}
+
+const createVenda: RequestHandler = async (req, res, next) => {
+  try {
+    const createVendaData: CreateVendaRequestBody = req.body;
+
+    const venId: number = await vendaService.createVenda({
+      cliId: createVendaData.cliId,
+      metPagId: createVendaData.metPagId
+    });
+
+    await pedidoService.createPedidosByVenId({
+      venId,
+      pedidos: createVendaData.pedidos
+    });
+
+    res.status(200).send('Venda criada com sucesso');
+  } catch (err) {
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
@@ -24,10 +49,10 @@ const getVendasByCliId: RequestHandler = async (req, res, next) => {
 
     res.json(vendasResponse);
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Ops, ocorreu um erro');
+    const errorMessage = (err as Error).message;
+    res.status(500).send(errorMessage);
     next();
   }
 }
 
-export default { getVendas, getVendasByCliId };
+export default { createVenda, getVendas, getVendasByCliId };

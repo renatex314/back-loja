@@ -34,6 +34,28 @@ const getProdutos = async () => {
   }
 }
 
+const getProdutoByProdId = async (prodId: number): Promise<ProdutoResponse> => {
+  const connection = getConnection();
+
+  try {
+    const produto: Produto = await connection.select().from('produto').where({ prodId }).first();
+    const produtoResponse: ProdutoResponse = {
+      prodId: prodId,
+      prodNome: produto.prodNome,
+      prodDescr: produto.prodDescr,
+      prodPreco: produto.prodPreco,
+      prodQtdEstoque: produto.prodQtdEstoque,
+      marca: await marcaService.getMarca(produto.marcaId as number)
+    }
+
+    return produtoResponse;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Erro ao obter o produto');
+  }
+}
+
 const createProduto = async (produtoData: Produto) => {
   const connection = getConnection();
   const trx = await connection.transaction();
@@ -100,6 +122,7 @@ const deleteProduto = async (prodId: number) => {
 
 export default {
   getProdutos,
+  getProdutoByProdId,
   createProduto,
   updateProduto,
   deleteProduto
