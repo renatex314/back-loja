@@ -9,7 +9,7 @@ const authenticateUser: RequestHandler = (req, res, next) => {
     const jwtToken = bearerToken?.split(' ')?.[1].trim() || '';
 
     jsonwebtoken.verify(jwtToken, TOKEN_SECRET, (err) => {
-      if (err) return res.status(403).send('Token inválido');
+      if (err) return res.status(401).send('Token inválido');
 
       return next();
     });

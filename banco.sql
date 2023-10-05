@@ -1,5 +1,7 @@
 /*SET GLOBAL log_bin_trust_function_creators = 1;*/
 
+CREATE DATABASE IF NOT EXISTS loja;
+
 USE loja;
 
 CREATE TABLE IF NOT EXISTS cliente(
@@ -71,4 +73,5 @@ AFTER INSERT ON venda_items
     END$
 DELIMITER ;
 
-
+CREATE USER IF NOT EXISTS 'aplicacao'@'localhost' IDENTIFIED BY 'Senha123@';
+GRANT ALL ON loja.* TO 'aplicacao'@'localhost';

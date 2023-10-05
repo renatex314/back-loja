@@ -7,12 +7,12 @@ const getConfiguredConnection = () => {
   return knex(knexStringCase({
     client: 'mysql2',
     connection: {
-      host: '0.0.0.0',
-      port: 3306,
-      user: 'aplicacao',
-      password: 'Senha123@',
-      database: 'loja',
-      timezone: 'UTC'
+      host: process.env.DB_HOST || '0.0.0.0',
+      port: process.env.DB_PORT || 3306,
+      user: process.env.DB_USER || 'aplicacao',
+      password: process.env.DB_PASSWORD || 'Senha123@',
+      database: process.env.DB_DATABASE || 'loja',
+      timezone: process.env.DB_TIMEZONE || 'UTC'
     },
   }))
 }
