@@ -1,6 +1,30 @@
 import { getConnection } from "../controllers/db.controller"
 import { CreateClienteRequestBody, UpdateClienteRequestBody } from "../types/cliente";
 
+const clienteWithEmailExists = async (cliEmail: string) => {
+  const connection = getConnection();
+
+  const cliente = await connection.select().from('cliente').where({
+    cliEmail
+  });
+
+  if (!!cliente) return true;
+
+  return false;
+}
+
+const clienteWithCpfExists = async (cliCpf: string) => {
+  const connection = getConnection();
+
+  const cliente = await connection.select().from('cliente').where({
+    cliCpf
+  });
+
+  if (!!cliente) return true;
+
+  return false;
+}
+
 const getClientes = async () => {
   const connection = getConnection();
 
@@ -11,11 +35,11 @@ const getClientes = async () => {
   return clientes;
 }
 
-const getCliente = async (cliId: number) => {
+const getClienteByCliId = async (cliId: number) => {
   const connection = getConnection();
 
   try {
-    const cliente = await connection.select().from('cliente').first();
+    const cliente = await connection.select().from('cliente').where({ cliId }).first();
 
     return cliente;
   } catch (err) {
@@ -93,4 +117,4 @@ const deleteCliente = async (cliId: number) => {
   }
 }
 
-export default { getCliente, getClientes, createCliente, updateCliente, deleteCliente };
+export default { clienteWithCpfExists, clienteWithEmailExists, getClienteByCliId, getClientes, createCliente, updateCliente, deleteCliente };

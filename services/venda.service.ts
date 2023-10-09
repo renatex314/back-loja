@@ -47,7 +47,7 @@ const getVendas = async () => {
     for (let i = 0; i < vendas.length; i++) {
       const vendaResponse: VendaResponse = {
         ...vendas[i],
-        cliente: await clienteService.getCliente(vendas[i].cliId),
+        cliente: await clienteService.getClienteByCliId(vendas[i].cliId),
         metpag: await metpagService.getMetodoPagamento(vendas[i].metPagId)
       };
 

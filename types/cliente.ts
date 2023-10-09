@@ -4,7 +4,7 @@ export interface Cliente {
     cliEmail?: string;
     cliSenhaHash?: string;
     cliCpf?: string;
-    cliRg?: null;
+    cliRg?: string;
     cliDtNascimento?: string;
     cliAdm?: boolean;
 }

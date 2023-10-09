@@ -15,6 +15,7 @@ app.use(cors({
 }));
 app.use(json());
 app.post('/login', authController.loginUser);
+app.post('/register', authController.registerUser);
 app.use('/api/', authMiddleware.authenticateUser, router);
 
 app.listen(port, () => {
