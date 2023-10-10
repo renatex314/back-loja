@@ -1,5 +1,5 @@
 import { getConnection } from "../controllers/db.controller";
-import { UserRegisterData } from "../types/auth";
+import { ClientRegisterData } from "../types/auth";
 import { Cliente } from "../types/cliente";
 import clienteService from "./cliente.service";
 
@@ -13,7 +13,7 @@ const getUserDataByUsuEmail = async (cliEmail: string) => {
   return userDataFromDB;
 }
 
-const registerUser = async (registerUserData: UserRegisterData) => {
+const registerUser = async (registerUserData: ClientRegisterData) => {
   try {
     if (
       await clienteService.clienteWithEmailExists(registerUserData.cliEmail) || 

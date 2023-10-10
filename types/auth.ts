@@ -1,9 +1,9 @@
-export interface UserLoginData {
+export interface ClientLoginData {
   cliEmail: string;
   cliSenha: string;
 }
 
-export interface UserRegisterRequestBodyData {
+export interface ClientRegisterRequestBodyData {
   cliNome?: string;
   cliEmail?: string;
   cliSenha?: string;
@@ -13,7 +13,7 @@ export interface UserRegisterRequestBodyData {
   cliAdm?: boolean;
 }
 
-export interface UserRegisterData {
+export interface ClientRegisterData {
   cliNome?: string;
   cliEmail: string;
   cliSenhaHash: string;

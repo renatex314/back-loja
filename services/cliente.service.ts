@@ -6,7 +6,7 @@ const clienteWithEmailExists = async (cliEmail: string) => {
 
   const cliente = await connection.select().from('cliente').where({
     cliEmail
-  });
+  }).first();
 
   if (!!cliente) return true;
 
@@ -18,7 +18,7 @@ const clienteWithCpfExists = async (cliCpf: string) => {
 
   const cliente = await connection.select().from('cliente').where({
     cliCpf
-  });
+  }).first();
 
   if (!!cliente) return true;
 
