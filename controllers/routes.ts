@@ -9,7 +9,7 @@ import authController from "./auth.controller";
 const router = Router();
 
 /*****************************/
-/***         VENDA         ***/
+/***    AUTENTICAÇÃO       ***/
 /*****************************/
 router.get("/me", authController.getClientMeData);
 
