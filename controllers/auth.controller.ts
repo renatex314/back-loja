@@ -2,7 +2,9 @@ import { RequestHandler } from "express";
 import { ClientLoginData, ClientRegisterRequestBodyData } from "../types/auth";
 import bcrypt from "bcrypt";
 import authService from "../services/auth.service";
-import { generateToken } from "../utils";
+import { decodeVerifyToken, generateToken } from "../utils";
+import clienteService from "../services/cliente.service";
+import { Cliente } from "../types/cliente";
 
 const loginUser: RequestHandler = async (req, res) => {
   const userData: ClientLoginData = req.body;
@@ -55,7 +57,29 @@ const registerUser: RequestHandler = async (req, res) => {
   }
 };
 
+const getClientMeData: RequestHandler = async (req, res) => {
+  const token = req.headers?.authorization?.split(" ")?.[1] || "";
+
+  try {
+    const tokenData = decodeVerifyToken(token);
+
+    const clientData: Cliente = await clienteService.getClienteByCliEmail(
+      tokenData.usuEmail
+    );
+
+    delete clientData?.cliId;
+    delete clientData?.cliSenhaHash;
+
+    res.status(200).send(clientData);
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).send((err as Error)?.message);
+  }
+};
+
 export default {
   loginUser,
   registerUser,
+  getClientMeData,
 };
