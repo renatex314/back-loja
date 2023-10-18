@@ -67,6 +67,9 @@ const getClientMeData: RequestHandler = async (req, res) => {
       tokenData.usuEmail
     );
 
+    if (!clientData)
+      return res.status(401).send("Usuário não encontrado no sistema");
+
     delete clientData?.cliId;
     delete clientData?.cliSenhaHash;
 

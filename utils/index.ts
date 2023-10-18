@@ -31,7 +31,7 @@ export const decodeVerifyToken = (token: string) => {
 
     return tokenData;
   } catch (err) {
-    console.log(err);
+    console.error(err);
 
     throw new Error("Token inválido");
   }
